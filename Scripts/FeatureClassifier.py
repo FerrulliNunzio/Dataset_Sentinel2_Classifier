@@ -32,24 +32,14 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_y_feature(self, count_start, count_finish):
+    def set_y_feature(self, file_path, count_start, count_finish):
         feature_series = []
         count = count_start
-        semipath_mask = "/masks"
-        semipath_dataset_2017 = "/DatasetSentinel2/DataSetSentinel2_2017"
-        semipath_dataset_2018 = "/DatasetSentinel2/DataSetSentinel2_2018"
-        path = PathManager()
-        path.initialize_folder_path()
-        mask_path = path.get_complete_path() + semipath_mask
-        path_2017 = path.get_complete_path() + semipath_dataset_2017
-        path_2018 = path.get_complete_path() + semipath_dataset_2018
         while count <= count_finish:
-            path2017 = path_2017 + "/geojson_" + str(count) + FILE_EXTENSION
-            path2018 = path_2018 + "/geojson_" + str(count) + FILE_EXTENSION
-            if TiffFileManager.file_exist(path2017) and TiffFileManager.file_exist(path2018):
-                file_path = mask_path + "/mask_" + str(count) + FILE_EXTENSION
+            path = file_path + "/mask_" + str(count) + FILE_EXTENSION
+            if TiffFileManager.file_exist(path):
                 image = TiffFileManager()
-                image.read_file(file_path)
+                image.read_file(path)
                 image_reshape = image.reshape_file()
                 feature_series.append(image_reshape)
             count += 1
@@ -64,26 +54,16 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_x_feature(self, count_start, count_finish):
+    def set_x_feature(self, file_path, count_start, count_finish):
         feature_series = []
-        path = PathManager()
-        path.initialize_folder_path()
-        path_2017 = path.get_complete_path() + "/DatasetSentinel2/DataSetSentinel2_2017"
-        path_2018 = path.get_complete_path() + "/DatasetSentinel2/DataSetSentinel2_2018"
         count = count_start
         while count <= count_finish:
-            path2017 = path_2017 + "/geojson_" + str(count) + FILE_EXTENSION
-            path2018 = path_2018 + "/geojson_" + str(count) + FILE_EXTENSION
-            if TiffFileManager.file_exist(path2017) and TiffFileManager.file_exist(path2018):
-                image2017 = TiffFileManager()
-                image2018 = TiffFileManager()
-                image2017.read_file(path2017)
-                image2018.read_file(path2018)
-                image_reshape2017 = image2017.reshape_file()
-                image_reshape2018 = image2018.reshape_file()
-                series = [image_reshape2017, image_reshape2018]
-                concatenate = numpy.concatenate(series, axis=1)
-                feature_series.append(concatenate)
+            path = file_path + "/geojson_" + str(count) + FILE_EXTENSION
+            if TiffFileManager.file_exist(path):
+                image = TiffFileManager()
+                image.read_file(path)
+                image_reshape = image.reshape_file()
+                feature_series.append(image_reshape)
             count += 1
         self.concatenate_feature_series(feature_series)
 

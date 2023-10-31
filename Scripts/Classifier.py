@@ -2,6 +2,8 @@ import sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
 
+RANDOM_STATE = 42
+
 
 class Classifier:
 
@@ -31,7 +33,7 @@ class Classifier:
     Comportamento: addestra il classificatore con le variabili passate in input
     """
     def __train(self, x_train, y_train):
-        self.__clf = RandomForestClassifier(class_weight={0: 1, 1: 10})
+        self.__clf = RandomForestClassifier(class_weight={0: 1, 1: 10}, random_state=RANDOM_STATE)
         self.__clf.fit(x_train.get_feature(), y_train)
 
     """

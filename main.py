@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     print("Addestramento e classificazione per i set di training e di test...")
     clf_2017 = Classifier()
-    prediction = clf_2017.classify(x_train_2017, y_train_2017, x_test_2017)
+    prediction = clf_2017.classify(x_train_2017.get_feature(), y_train_2017, x_test_2017.get_feature())
 
     count_0 = 0
     count_1 = 0
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     print("Addestramento e classificazione per i set di training e di test...")
     clf_2018 = Classifier()
-    prediction = clf_2018.classify(x_train_2018, y_train_2018, x_test_2018)
+    prediction = clf_2018.classify(x_train_2018.get_feature(), y_train_2018, x_test_2018.get_feature())
 
     count_0 = 0
     count_1 = 0
@@ -119,5 +119,36 @@ if __name__ == '__main__':
 
     clf_2018.print_confusion_matrix(y_test_2018, prediction)
     clf_2018.print_classification_report(y_test_2018, prediction)
+
+    print("TEST DATI FORESTE 2017-2018:\n")
+
+    print("Acquisizione dei set di training...")
+    x_train = numpy.concatenate([x_train_2017.get_feature(), x_train_2018.get_feature()], axis=1)
+    y_train = y_train_2018
+    print(x_train.shape)
+    print(y_train.shape)
+    print("Acquisizione dei set di test...")
+    x_test = numpy.concatenate([x_test_2017.get_feature(), x_test_2018.get_feature()], axis=1)
+    y_test = y_test_2018
+    print(x_test.shape)
+    print(y_test.shape)
+
+    print("Addestramento e classificazione per i set di training e di test...")
+    clf = Classifier()
+    prediction = clf.classify(x_train, y_train, x_test)
+
+    count_0 = 0
+    count_1 = 0
+    for item in prediction:
+        if item == 1:
+            count_1 += 1
+        if item == 0:
+            count_0 += 1
+    print("\n\nI risultati derivati dalla prediction sono:\n")
+    print(f"    (i)  Gli uno sono: {count_1};\n"
+          f"    (ii) Gli zero sono: {count_0}.")
+
+    clf.print_confusion_matrix(y_test, prediction)
+    clf.print_classification_report(y_test, prediction)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

@@ -1,7 +1,6 @@
 import numpy
 from numpy import ndarray
 from Scripts.TiffFileManager import TiffFileManager
-from Scripts.PathManager import PathManager
 
 FILE_EXTENSION = ".tif"
 

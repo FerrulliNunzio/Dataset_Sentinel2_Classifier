@@ -34,7 +34,7 @@ class Classifier:
     """
     def __train(self, x_train, y_train):
         self.__clf = RandomForestClassifier(class_weight={0: 1, 1: 10}, random_state=RANDOM_STATE)
-        self.__clf.fit(x_train.get_feature(), y_train)
+        self.__clf.fit(x_train, y_train)
 
     """
     Nome: __prediction
@@ -46,7 +46,7 @@ class Classifier:
     Comportamento: restituisce le classi di predizione date dalla funzione predict del RandomForestClassifier
     """
     def __prediction(self, x_test):
-        prediction = self.__clf.predict(x_test.get_feature())
+        prediction = self.__clf.predict(x_test)
         return prediction
 
     """

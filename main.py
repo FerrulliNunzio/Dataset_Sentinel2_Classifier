@@ -18,60 +18,9 @@ if __name__ == '__main__':
     general_path.initialize_folder_path()
     print(general_path.get_complete_path())
 
-    print("TEST DATI FORESTE 2017:\n")
-
-    print("Acquisizione dei set di training...")
-    path_image2017 = general_path.get_complete_path() + "/DatasetSentinel2/DataSetSentinel2_2017"
-    path_mask = general_path.get_complete_path() + "/masks"
-
-    x_train_2017 = FeatureClassifier()
-    x_train_2017.set_x_feature(path_image2017, 0, 77)
-    x_train_2017.replace_nan_value()
-    x_train_2017.replace_value(255, 1)
-    print(x_train_2017.get_feature().shape)
-
-    Y_train_2017 = FeatureClassifier()
-    Y_train_2017.set_y_feature(path_mask, 0, 77)
-    Y_train_2017.replace_nan_value()
-    Y_train_2017.replace_value(255, 1)
-    y_train_2017 = Y_train_2017.flatten_array()
-    print(Y_train_2017.get_feature().shape)
-
-    print("Acquisizione dei set di test...")
-    x_test_2017 = FeatureClassifier()
-    x_test_2017.set_x_feature(path_image2017, 78, 93)
-    x_test_2017.replace_nan_value()
-    x_test_2017.replace_value(255, 1)
-    print(x_test_2017.get_feature().shape)
-
-    Y_test_2017 = FeatureClassifier()
-    Y_test_2017.set_y_feature(path_mask, 78, 93)
-    Y_test_2017.replace_nan_value()
-    Y_test_2017.replace_value(255, 1)
-    print(Y_test_2017.get_feature().shape)
-    y_test_2017 = Y_test_2017.flatten_array()
-
-    print("Addestramento e classificazione per i set di training e di test...")
-    clf_2017 = Classifier()
-    prediction = clf_2017.classify(x_train_2017.get_feature(), y_train_2017, x_test_2017.get_feature())
-
-    count_0 = 0
-    count_1 = 0
-    for item in prediction:
-        if item == 1:
-            count_1 += 1
-        if item == 0:
-            count_0 += 1
-    print("\n\nI risultati derivati dalla prediction sono:\n")
-    print(f"    (i)  Gli uno sono: {count_1};\n"
-          f"    (ii) Gli zero sono: {count_0}.")
-
-    clf_2017.print_confusion_matrix(y_test_2017, prediction)
-    clf_2017.print_classification_report(y_test_2017, prediction)
-
     print("TEST DATI FORESTE 2018:\n")
 
-    print("Acquisizione dei set di training...")
+    print("Acquisizione dei set di training 2018...")
     path_image2018 = general_path.get_complete_path() + "/DatasetSentinel2/DataSetSentinel2_2018"
     path_mask = general_path.get_complete_path() + "/masks"
 
@@ -88,7 +37,7 @@ if __name__ == '__main__':
     y_train_2018 = Y_train_2018.flatten_array()
     print(Y_train_2018.get_feature().shape)
 
-    print("Acquisizione dei set di test...")
+    print("Acquisizione dei set di test 2018...")
     x_test_2018 = FeatureClassifier()
     x_test_2018.set_x_feature(path_image2018, 78, 93)
     x_test_2018.replace_nan_value()
@@ -122,12 +71,43 @@ if __name__ == '__main__':
 
     print("TEST DATI FORESTE 2017-2018:\n")
 
-    print("Acquisizione dei set di training...")
+    print("Acquisizione dei set di training 2017...")
+    path_image2017 = general_path.get_complete_path() + "/DatasetSentinel2/DataSetSentinel2_2017"
+    path_mask = general_path.get_complete_path() + "/masks"
+
+    x_train_2017 = FeatureClassifier()
+    x_train_2017.set_x_feature(path_image2017, 0, 77)
+    x_train_2017.replace_nan_value()
+    x_train_2017.replace_value(255, 1)
+    print(x_train_2017.get_feature().shape)
+
+    Y_train_2017 = FeatureClassifier()
+    Y_train_2017.set_y_feature(path_mask, 0, 77)
+    Y_train_2017.replace_nan_value()
+    Y_train_2017.replace_value(255, 1)
+    y_train_2017 = Y_train_2017.flatten_array()
+    print(Y_train_2017.get_feature().shape)
+
+    print("Acquisizione dei set di test 2017...")
+    x_test_2017 = FeatureClassifier()
+    x_test_2017.set_x_feature(path_image2017, 78, 93)
+    x_test_2017.replace_nan_value()
+    x_test_2017.replace_value(255, 1)
+    print(x_test_2017.get_feature().shape)
+
+    Y_test_2017 = FeatureClassifier()
+    Y_test_2017.set_y_feature(path_mask, 78, 93)
+    Y_test_2017.replace_nan_value()
+    Y_test_2017.replace_value(255, 1)
+    print(Y_test_2017.get_feature().shape)
+    y_test_2017 = Y_test_2017.flatten_array()
+
+    print("Concatenazione dei set di training 2017 e 2018...")
     x_train = numpy.concatenate([x_train_2017.get_feature(), x_train_2018.get_feature()], axis=1)
     y_train = y_train_2018
     print(x_train.shape)
     print(y_train.shape)
-    print("Acquisizione dei set di test...")
+    print("Concatenazione dei set di test 2017 e 2018...")
     x_test = numpy.concatenate([x_test_2017.get_feature(), x_test_2018.get_feature()], axis=1)
     y_test = y_test_2018
     print(x_test.shape)

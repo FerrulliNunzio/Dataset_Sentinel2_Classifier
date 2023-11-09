@@ -1,4 +1,5 @@
 import sklearn
+from numpy import ndarray
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -32,7 +33,7 @@ class Classifier:
 
     Comportamento: addestra il classificatore con le variabili passate in input
     """
-    def __train(self, x_train, y_train):
+    def __train(self, x_train: ndarray, y_train: ndarray):
         self.__clf = RandomForestClassifier(class_weight={0: 1, 1: 10}, random_state=RANDOM_STATE)
         self.__clf.fit(x_train, y_train)
 
@@ -45,7 +46,7 @@ class Classifier:
 
     Comportamento: restituisce le classi di predizione date dalla funzione predict del RandomForestClassifier
     """
-    def __prediction(self, x_test):
+    def __prediction(self, x_test: ndarray):
         prediction = self.__clf.predict(x_test)
         return prediction
 
@@ -58,7 +59,7 @@ class Classifier:
 
     Comportamento: effettua la classificazione restituendo i rsultati della previsione del classificatore
     """
-    def classify(self, x_train, y_train, x_test):
+    def classify(self, x_train: ndarray, y_train: ndarray, x_test: ndarray):
         self.__train(x_train, y_train)
         prediction = self.__prediction(x_test)
         return prediction
@@ -73,7 +74,7 @@ class Classifier:
     Comportamento: restituisce la matrice di confusione
     """
     @staticmethod
-    def confusionmatrix(y_true, y_pred):
+    def confusionmatrix(y_true: ndarray, y_pred: ndarray):
         try:
             return confusion_matrix(y_true, y_pred)
         except sklearn.utils._param_validation.InvalidParameterError:
@@ -90,7 +91,7 @@ class Classifier:
     Comportamento: restituisce come stringa la precision, il recall, f1_score
     """
     @staticmethod
-    def report(y_true, y_pred):
+    def report(y_true: ndarray, y_pred: ndarray):
         try:
             return classification_report(y_true, y_pred)
         except sklearn.utils._param_validation.InvalidParameterError:
@@ -107,7 +108,7 @@ class Classifier:
 
     Comportamento: stampa a video la matrice di confusione
     """
-    def print_confusion_matrix(self, y_true, y_pred):
+    def print_confusion_matrix(self, y_true: ndarray, y_pred: ndarray):
         print("La matrice di confusione è:\n")
         print(self.confusionmatrix(y_true, y_pred))
 
@@ -120,6 +121,6 @@ class Classifier:
 
     Comportamento: stampa a video il report della classificazione
     """
-    def print_classification_report(self, y_true, y_pred):
+    def print_classification_report(self, y_true: ndarray, y_pred: ndarray):
         print("Il report della classificazione è:")
         print(self.report(y_true, y_pred))

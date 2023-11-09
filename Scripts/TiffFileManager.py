@@ -32,7 +32,7 @@ class TiffFileManager:
                    altrimenti restituisce falso
     """
     @staticmethod
-    def file_exist(file_path):
+    def file_exist(file_path: str):
         return os.path.isfile(file_path)
 
     """
@@ -45,7 +45,7 @@ class TiffFileManager:
     Comportamento: Controlla se il file esiste nel percorso specificato,
                    se esiste assegna alla variabile __image un immagine come ndarray
     """
-    def read_file(self, file_path):
+    def read_file(self, file_path: str):
         if self.file_exist(file_path):
             self.__image = tifffile.imread(file_path)
 
@@ -122,7 +122,7 @@ class TiffFileManager:
     Comportamento: Dopo aver controllato se l'indice passato in input è minore della lunghezza dello shape
                    restituisce il valore nell'i-esima posizione dello shape
     """
-    def get_shape_element(self, index):
+    def get_shape_element(self, index: int):
         if index < self.tiff_shape_length():
             return self.__image.shape[index]
         return

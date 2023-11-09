@@ -31,7 +31,7 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_y_feature(self, file_path, count_start, count_finish):
+    def set_y_feature(self, file_path: str, count_start: int, count_finish: int):
         feature_series = []
         count = count_start
         while count <= count_finish:
@@ -53,7 +53,7 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_x_feature(self, file_path, count_start, count_finish):
+    def set_x_feature(self, file_path: str, count_start: int, count_finish: int):
         feature_series = []
         count = count_start
         while count <= count_finish:
@@ -158,7 +158,7 @@ class FeatureClassifier:
                   se il valore dell'elemento i-esimo della feature corrisponde a value_to_change
                   il valore viene sostituito con quello di value_with_change 
     """
-    def replace_value(self, value_to_change, value_with_change):
+    def replace_value(self, value_to_change: int, value_with_change: int):
         for row_index in range(len(self.__feature)):
             for column_index in range(len(self.__feature[row_index])):
                 if self.__feature[row_index][column_index] == value_to_change:

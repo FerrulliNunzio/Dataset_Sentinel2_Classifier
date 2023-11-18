@@ -60,8 +60,13 @@ class Classifier:
     Comportamento: effettua la classificazione restituendo i rsultati della previsione del classificatore
     """
     def classify(self, x_train: ndarray, y_train: ndarray, x_test: ndarray):
-        self.__train(x_train, y_train)
-        prediction = self.__prediction(x_test)
+        prediction = None
+        try:
+            self.__train(x_train, y_train)
+            prediction = self.__prediction(x_test)
+        except ValueError:
+            raise ValueError("Impossibile eseguire la classificazione.\n"
+                  "La funzione riceve un argomento che ha il tipo corretto ma un valore inappropriato")
         return prediction
 
     """
@@ -77,7 +82,7 @@ class Classifier:
     def confusionmatrix(y_true: ndarray, y_pred: ndarray):
         try:
             return confusion_matrix(y_true, y_pred)
-        except sklearn.utils._param_validation.InvalidParameterError:
+        except ValueError:
             print("Errore, parametri passati alla funzione confusionmatrix errati.\n"
                   "I parametri passati in input devono essere vettori a una dimensione.\n")
 
@@ -94,7 +99,7 @@ class Classifier:
     def report(y_true: ndarray, y_pred: ndarray):
         try:
             return classification_report(y_true, y_pred)
-        except sklearn.utils._param_validation.InvalidParameterError:
+        except ValueError:
             print("Errore, parametri passati alla funzione report errati.\n"
                   "I parametri passati in input devono essere vettori a una dimensione.\n")
 

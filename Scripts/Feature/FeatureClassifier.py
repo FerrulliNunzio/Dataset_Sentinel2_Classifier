@@ -1,11 +1,13 @@
 import numpy
 from numpy import ndarray
+
+from Scripts.Feature.FeatureType import FeatureType
 from Scripts.TiffFileManager import TiffFileManager
 
 FILE_EXTENSION = ".tif"
 
 
-class FeatureClassifier:
+class FeatureClassifier(FeatureType):
     # Dichiarazione variabili
 
     __feature: ndarray
@@ -19,8 +21,9 @@ class FeatureClassifier:
 
     Comportamento: inizializza la variabile __feature
     """
-    def __init__(self):
+    def __init__(self, feature_type: str):
         self.__feature = None
+        super().__init__(feature_type)
 
     """
     Nome: set_y_feature
@@ -31,7 +34,7 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_y_feature(self, file_path: str, count_start: int, count_finish: int):
+    def __set_y_feature(self, file_path: str, count_start: int, count_finish: int):
         feature_series = []
         count = count_start
         while count <= count_finish:
@@ -53,7 +56,7 @@ class FeatureClassifier:
 
     Comportamento: avvalora la variabile __feature
     """
-    def set_x_feature(self, file_path: str, count_start: int, count_finish: int):
+    def __set_x_feature(self, file_path: str, count_start: int, count_finish: int):
         feature_series = []
         count = count_start
         while count <= count_finish:
@@ -65,6 +68,21 @@ class FeatureClassifier:
                 feature_series.append(image_reshape)
             count += 1
         self.concatenate_feature_series(feature_series)
+
+    """
+    Nome: set_feature
+
+    Input: elemento da cui partire (count_start) e l'elemento dove fermarsi (count_finish)
+
+    Output: controlla il tipo della feature e richiama la funzione corrispondente
+
+    Comportamento: utilizza la funzione concatenate di numpy per concatenare gli elementi della lista passata in input
+    """
+    def set_feature(self, file_path: str, count_start: int, count_finish: int):
+        if self.equals("input"):
+            self.__set_x_feature(file_path, count_start, count_finish)
+        elif self.equals("target"):
+            self.__set_y_feature(file_path, count_start, count_finish)
 
     """
     Nome: concatenate_feature_series

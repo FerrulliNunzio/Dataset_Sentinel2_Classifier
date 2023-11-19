@@ -1,4 +1,3 @@
-import sklearn
 from numpy import ndarray
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report

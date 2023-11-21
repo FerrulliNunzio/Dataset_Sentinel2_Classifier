@@ -33,7 +33,7 @@ class Classifier:
     Comportamento: addestra il classificatore con le variabili passate in input
     """
     def __train(self, x_train: ndarray, y_train: ndarray):
-        self.__clf = RandomForestClassifier(class_weight={0: 1, 1: 10}, random_state=RANDOM_STATE)
+        self.__clf = RandomForestClassifier(max_depth=10, class_weight={0: 1, 1: 5}, random_state=RANDOM_STATE)
         self.__clf.fit(x_train, y_train)
 
     """
